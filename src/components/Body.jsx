@@ -58,7 +58,7 @@ export default function Body() {
                     </div>
                   ) : (
                     <div className='p-10'>
-                      Tasks created
+                      Tasks created will show here
                     </div>
                   )
                 }
