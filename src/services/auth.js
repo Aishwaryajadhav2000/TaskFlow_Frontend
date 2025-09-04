@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"
 
 export const registration = async (userData) => {
 
-
     console.log("Creating user...")
     try {
         const registerResponse = await fetch(`${API_BASE_URL}/api/createuser`, {
@@ -23,13 +22,9 @@ export const registration = async (userData) => {
                 password: userData.password
             })
         });
-        console.log("registerresponse", registerResponse);
-        if (registerResponse.status == 200) {
-            alert("USer created successfully")
-        }
-
+        return registerResponse;
     } catch (err) {
-        console.log(err.message)
+        alert(err.message)
     }
 }
 
@@ -49,10 +44,10 @@ export const loginUser = async (credentials) => {
         const responseData = await loginresponse.json();
         console.log("loginresponse", responseData)
         if (loginresponse.status == 200) {
-            alert("Login successfull..");
             localStorage.setItem("loginstatus", "true");
             localStorage.setItem("user", JSON.stringify(responseData.user));
-            localStorage.setItem("token", responseData.accessToke)
+            localStorage.setItem("token", responseData.accessToke);
+            window.location.reload();
         }
     } catch (error) {
         throw error.response?.data || error.message;
@@ -61,6 +56,7 @@ export const loginUser = async (credentials) => {
 
 
 export const getFullProfile = async (e) => {
+
     console.log("calling getfullprofile function here...")
 
     try {
@@ -75,12 +71,18 @@ export const getFullProfile = async (e) => {
                     "Authorization": `Bearer ${token}`
                 },
             });
-
+            if (responseData.status === 402) {
+                localStorage.removeItem("loginstatus");
+                localStorage.removeItem("user");
+                localStorage.removeItem("token");
+                alert("Please LogIn again...");
+                return null
+            }
             const freshUser = await responseData.json();
-            console.log("userData...", freshUser)
+            console.log("userData...", freshUser);
+
+            return freshUser
         }
-
-
 
     } catch (err) {
         console.log(err)

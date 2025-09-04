@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 input, select{
     border: 1px solid black;
     display: flex;
@@ -11,4 +13,24 @@ label{
 .slick-next:before {
   color: rgb(13, 13, 145) !important;
   font-size: 25px; /* make them a bit bigger if you want */
+}
+
+.headerBtn{
+  @apply bg-blue-700 hover:bg-blue-900 font-bold p-3.5 rounded-2xl text-white pr-4 pl-4
+  cursor-pointer
+}
+.complete{
+  @apply border border-3 border-green-600 text-green-900
+}
+.complete button{
+  @apply hover:bg-green-900 hover:text-white
+}
+.todo{
+  @apply border border-3 border-red-600 text-red-900
+}
+.inprogress{
+  @apply border border-3 border-fuchsia-600 text-fuchsia-950
+}
+.logo{
+  @apply h-28 w-40 
 }
