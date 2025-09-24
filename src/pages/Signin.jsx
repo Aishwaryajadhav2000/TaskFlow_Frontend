@@ -38,6 +38,10 @@ export default function Signin() {
     } else {
       try {
         const registerUser = await registration(userData);
+        const data = await registerUser.json()
+        if(registerUser.status == 500){
+          alert(data.message)
+        }
         if (registerUser.status == 200) {
           alert("USer created successfully");
           navigate('/')

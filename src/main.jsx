@@ -13,11 +13,16 @@ import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import Body from './components/Body.jsx'
 import Loader from './components/Loader.jsx'
+import ViewTasks from './pages/ViewTasks.jsx'
+import Profile from './pages/Profile.jsx'
+import Error from './components/Error.jsx'
+import CreateOrg from './pages/CreateOrg.jsx'
 
 const appRouter = createBrowserRouter([
   {
     path: '/',
     element: <App></App>,
+    errorElement : <Error></Error>,
     children: [
       {
         path: '/addtask',
@@ -38,6 +43,18 @@ const appRouter = createBrowserRouter([
       {
         path: '/contact',
         element: <Footer></Footer>
+      },
+      {
+        path : '/viewtasks',
+        element : <ViewTasks></ViewTasks>
+      },
+      {
+        path : '/profile',
+        element : <Profile></Profile>
+      },
+      {
+        path : '/createorg',
+        element : <CreateOrg></CreateOrg>
       },
       {
         path: '/',

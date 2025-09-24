@@ -1,19 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../App.css'
 import { registration } from '../services/auth.js';
 import API_BASE_URL from '../services/common';
+import { useNavigate } from "react-router-dom";
+import { getCompaniesList } from '../services/company.js';
 
 export default function CreateAdmin() {
 
   const [jobPosition, setJobPosition] = useState(false)
-  const [companyName, setCompanyName] = useState("");
   const [fullName, setFullName] = useState("");
   const [userName, setUserName] = useState("");
   const [phoneNo, setPhoneNo] = useState("");
   const [gender, setGender] = useState("");
   const [position, setPosition] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const [companyName, setCompanyName] = useState('');
+  const [companyList , setCompanyList] = useState([])
   // const [userData, setUserData] = useState({ companyName, fullName, userName, phoneNo, gender, position, password });
+
+  useEffect(() => {
+    const getCompaniesNameFunction = async() => {
+      const getCompaniesName =await getCompaniesList();
+      // console.log("getcompaniesname" , getCompaniesName)
+      const dataRes = await getCompaniesName.json()
+      setCompanyList(dataRes.companies || [])
+    }
+    getCompaniesNameFunction();
+  } , [])
 
   const register = async (e) => {
     e.preventDefault();
@@ -29,7 +43,21 @@ export default function CreateAdmin() {
       password
     };
 
-    registration(userData);
+    if (!companyName || !fullName || !userName || !phoneNo || !gender || !position || !password) {
+      alert("please filled all the fields...")
+    } else {
+      try {
+        const registerUser = await registration(userData);
+        if (registerUser.status == 200) {
+          alert("USer created successfully");
+          navigate('/')
+        }
+      } catch (err) {
+        alert(err.message)
+      }
+    }
+
+    // registration(userData);
   }
 
   return (
@@ -43,9 +71,19 @@ export default function CreateAdmin() {
 
           <form action="" className='border w-3xl p-10' onSubmit={register}>
 
-            <div className='flex'>
+            {/* <div className='flex'>
               <label htmlFor="">Enter Company Name</label>
               <input type="text" placeholder='Company name' onChange={(e) => setCompanyName(e.target.value)} />
+            </div> */}
+            <div className='flex'>
+              <label htmlFor="">Select Company </label>
+              <select onChange={(e)=>setCompanyName(e.target.value)}>
+                {
+                  companyList.map((companies)=>(
+                    <option key={companies._id}>{companies.companyname}</option>
+                  ))
+                }
+              </select>
             </div>
 
             <div className='flex mt-5'>

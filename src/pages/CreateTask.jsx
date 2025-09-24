@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { createTaskservice } from '../services/tasks.js';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { getUsersByCompany } from '../services/company.js';
 
 export default function CreateTask() {
 
@@ -16,15 +18,26 @@ export default function CreateTask() {
   const location = useLocation();
   const getCompanyName = location.state?.companyName;
   const navigate = useNavigate();
-  const [hasError , sethasError] = useState(false)
+  const [hasError, sethasError] = useState(false);
+  const getUSers = location.state?.users;
+  const [taskImage , setTaskImage] = useState(null)
+  
 
   useEffect(() => {
-    console.log(getCompanyName)
-  })
+    console.log(getCompanyName);
+    console.log("users" , getUSers)
+  }, [getCompanyName]);
+
 
   const createTask = async (e) => {
     e.preventDefault();
-    const data = { description, taskAssign, taskStatus }
+    // const data = { description, taskAssign, taskStatus , taskImage};
+    
+    const data = new FormData();
+    data.append('description' , description)
+    data.append('taskAssign' , taskAssign)
+    data.append('taskStatus' , taskStatus)
+    data.append('taskImage' , taskImage);
 
     //Task description
     if (description === "") {
@@ -57,6 +70,8 @@ export default function CreateTask() {
         if (createResponse.status === 200) {
           navigate('/')
           alert("Task created successfully...")
+        }else{
+          alert(createResponse.message)
         }
 
       } catch (err) {
@@ -64,10 +79,11 @@ export default function CreateTask() {
         alert(err.message)
       }
     }
-
-
-
     // createTaskservice(data);
+  }
+
+  const handleFileChange = (e)=>{
+    setTaskImage(e.target.files[0])
   }
 
   return (
@@ -77,7 +93,7 @@ export default function CreateTask() {
           <form action="" className='border border-black w-4xl m-10  p-6' onSubmit={createTask}>
             <div>
               <label htmlFor="" className='block'>Description</label>
-              <textarea name="" id="" className='border border-black block w-full m-5 h-28' onChange={(e) => setDescription(e.target.value)}></textarea>
+              <textarea name="" id="" className='border border-black w-full m-5 h-28 text-center item-center flex' onChange={(e) => setDescription(e.target.value)}></textarea>
               {descriptionError === true && (<div className='flex justify-center'><h1>Please Add description</h1></div>)}
 
             </div>
@@ -85,10 +101,11 @@ export default function CreateTask() {
             <div className='flex gap-10 mt-7'>
               <label htmlFor="">Assign to</label>
               <select name="" id="" className='border border-black  p-2' onChange={(e) => setAssignTo(e.target.value)}>
-                <option value="null">Select User</option>
-                <option value="aish">Aish</option>
-                <option value="mayur">Mayur</option>
-                <option value="mandar">Mandar</option>
+                {
+                  getUSers.map((user)=>(
+                    <option key={user._id}>{user.fullname}</option>
+                  ))
+                }
               </select>
               {taskAssignError === true && (<div className='flex justify-center'><h1>Please select user to assign</h1></div>)}
             </div>
@@ -104,8 +121,18 @@ export default function CreateTask() {
               {taskStatusError === true && (<div className='flex justify-center'><h1>Please select status</h1></div>)}
             </div>
 
+            <div className='mt-7'>
+              <input type="file" placeholder='Add Screenshot' onChange={handleFileChange}/>
+            </div>
+
+
+
             <div className='mt-7 justify-center flex'>
-              <button className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold' type='submit'>Submit</button>
+              <button className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold cursor-pointer' type='submit'>Submit</button>
+            </div>
+
+            <div className='mt-7 justify-center flex'>
+              <Link className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold text-center' to="/">Cancel</Link>
             </div>
           </form>
         </article>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { createTaskservice, getTaskById, updateTaskService } from '../services/tasks.js';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function UpdateTask() {
 
@@ -12,16 +13,19 @@ export default function UpdateTask() {
 
     const [taskStatus, setTaskStatus] = useState("");
     const [taskStatusError, setTaskStatusError] = useState(false);
-  const [hasError , sethasError] = useState(false)
+    const [hasError, sethasError] = useState(false)
     const [owner, setOwner] = useState("");
     const location = useLocation();
-    // const getCompanyName = location.state?.companyName;
+    const [taskImage, setTaskImage] = useState(null)
+    // const getCompanyName = location.state?.companyname;
     const taskId = location.state?.taskId;
     const navigate = useNavigate();
+    const users = location.state?.user
 
     useEffect(() => {
-        // console.log(getCompanyName);
-        console.log(taskId);
+        // console.log("companyname",getCompanyName);
+        // console.log(taskId);
+        console.log("users", users)
 
         if (!taskId) {
             alert("Please provide task id");
@@ -36,6 +40,7 @@ export default function UpdateTask() {
                 setDescription(tasksdata.task.description);
                 setAssignTo(tasksdata.task.taskAssign);
                 setTaskStatus(tasksdata.task.taskStatus)
+                setTaskImage(tasksdata.task.taskImage)
             } catch (err) {
                 console.log(err)
             }
@@ -44,11 +49,20 @@ export default function UpdateTask() {
         gettaskData();
     }, [taskId]);
 
+    const handleFileChange = (e) => {
+        setTaskImage(e.target.files[0])
+    }
+
     const updateTask = async (e) => {
         e.preventDefault();
         console.log("description", description);
-        const taskData = { description, taskAssign, taskStatus };
-        console.log("taskdata", taskData)
+        // const taskData = { description, taskAssign, taskStatus , taskImage};
+        // console.log("taskdata", taskData)
+        const taskData = new FormData();
+        taskData.append('description', description)
+        taskData.append('taskAssign', taskAssign)
+        taskData.append('taskStatus', taskStatus)
+        taskData.append('taskImage', taskImage);
 
         //Task description
         if (description === "") {
@@ -61,7 +75,7 @@ export default function UpdateTask() {
         //Task Assign
         if (taskAssign === "null") {
             setAssignToError(true)
-             sethasError(true)
+            sethasError(true)
         } else {
             setAssignToError(false)
         }
@@ -69,7 +83,7 @@ export default function UpdateTask() {
         //task status
         if (taskStatus === "null") {
             setTaskStatusError(true)
-             sethasError(true)
+            sethasError(true)
         } else {
             setTaskStatusError(false)
         }
@@ -104,10 +118,15 @@ export default function UpdateTask() {
                         <div className='flex gap-10 mt-7'>
                             <label htmlFor="">Assign to</label>
                             <select name="" id="" className='border border-black  p-2' value={taskAssign} onChange={(e) => setAssignTo(e.target.value)}>
-                                <option value="null">Select User</option>
+                                {/* <option value="null">Select User</option>
                                 <option value="aish">Aish</option>
                                 <option value="mayur">Mayur</option>
-                                <option value="mandar">Mandar</option>
+                                <option value="mandar">Mandar</option> */}
+                                {
+                                    users.map((user) => (
+                                        <option key={user._id}>{user.fullname}</option>
+                                    ))
+                                }
                             </select>
                             {taskAssignError === true && (<div className='flex justify-center'><h1>Please select user to assign</h1></div>)}
                         </div>
@@ -123,8 +142,27 @@ export default function UpdateTask() {
                             {taskStatusError === true && (<div className='flex justify-center'><h1>Please select status</h1></div>)}
                         </div>
 
+                        <br />
+                        {
+                            taskImage && taskImage !== "undefined" || "null"  ? (
+                                <div>
+                                    <img src={`http://localhost:8000/${taskImage}`}
+                                        alt="taskimage" className='w-[200px] h-[150px]' />
+                                </div>
+                            ) :  (
+                                <div>
+                                    <input type="file" placeholder='Add Screenshot' onChange={handleFileChange} />
+
+                                </div>
+                            ) 
+                        }
+
                         <div className='mt-7 justify-center flex'>
                             <button className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold' type='submit'>Update</button>
+                        </div>
+
+                        <div className='mt-7 justify-center flex'>
+                            <Link className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold text-center' to="/">Cancel</Link>
                         </div>
                     </form>
                 </article>

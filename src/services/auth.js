@@ -1,7 +1,5 @@
 import axios from "axios"
 import API_BASE_URL from "./common.js"
-import { useNavigate } from "react-router-dom"
-
 
 export const registration = async (userData) => {
 
@@ -43,12 +41,17 @@ export const loginUser = async (credentials) => {
         });
         const responseData = await loginresponse.json();
         console.log("loginresponse", responseData)
+
+        if (loginresponse.status == 400) {
+            alert(responseData.message)
+        }
         if (loginresponse.status == 200) {
             localStorage.setItem("loginstatus", "true");
             localStorage.setItem("user", JSON.stringify(responseData.user));
             localStorage.setItem("token", responseData.accessToke);
             window.location.reload();
         }
+        return loginresponse
     } catch (error) {
         throw error.response?.data || error.message;
     }
@@ -57,14 +60,14 @@ export const loginUser = async (credentials) => {
 
 export const getFullProfile = async (e) => {
 
-    console.log("calling getfullprofile function here...")
+    // console.log("calling getfullprofile function here...")
 
     try {
         const token = localStorage.getItem("token");
         if (!token) {
             console.log("invalid token")
         } else {
-            console.log("else")
+            // console.log("else")
             const responseData = await fetch(`${API_BASE_URL}/api/getuser`, {
                 method: "GET",
                 headers: {
@@ -76,6 +79,7 @@ export const getFullProfile = async (e) => {
                 localStorage.removeItem("user");
                 localStorage.removeItem("token");
                 alert("Please LogIn again...");
+                window.location.reload();
                 return null
             }
             const freshUser = await responseData.json();
@@ -87,7 +91,54 @@ export const getFullProfile = async (e) => {
     } catch (err) {
         console.log(err)
     }
-
-
 };
 
+
+export const updatePass = async (newPass) => {
+
+    try {
+        const token = localStorage.getItem("token");
+
+        const newpassRes = await fetch(`${API_BASE_URL}/api/updatepass`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                password: newPass
+            })
+        });
+        console.log("res", newpassRes)
+        const data = await newpassRes.json()
+        console.log(data)
+        if (newpassRes.status == 200) {
+            alert(data.message);
+
+        }
+        return newpassRes;
+
+    } catch (err) {
+        console.log(err.message)
+    }
+}
+
+export const deleteUser = async (companyName) => {
+    try {
+        const token = localStorage.getItem("token");
+        const deleteRes = await fetch(`${API_BASE_URL}/api/deleteuser` , {
+            method : 'DELETE',
+            headers : {
+                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body:JSON.stringify({
+                companyname : companyName
+            })
+        });
+        return deleteRes;
+    } catch (err) {
+        console.log(err.message)
+    }
+
+}
