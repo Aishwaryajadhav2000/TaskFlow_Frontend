@@ -14,40 +14,40 @@ export default function Body() {
   const [taskFindByUser, setTaskFindByUser] = useState("");
   const [displayTask, setDisplayTask] = useState(null);
   const [companyName, setCompanyName] = useState()
+  // const [filterdTask, setFilterTask] = useState([]);
+  const [allTasks , setAllTasks] = useState([])
 
   useEffect(() => {
     const getLoginStatus = localStorage.getItem("loginstatus");
 
     if (getLoginStatus !== null) {
       setLoginStatus(true);
-
-      const fetchUser = async () => {
-        const profile = await getFullProfile(); 
-        setUserFullName(profile.fullname)
-        setUserTasks(profile.tasks)
-        setCompanyName(profile.companyname);
-        console.log("consoling", profile.companyname)
-      };
       fetchUser();
     }
-
-
   }, []);
 
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
+  const fetchUser = async () => {
+    const profile = await getFullProfile();
+    setUserFullName(profile.fullname)
+    setAllTasks(profile.tasks)
+    setUserTasks(profile.tasks)
+    setCompanyName(profile.companyname);
+    console.log("consoling", profile.companyname)
   };
 
   const findHandle = (user) => {
     console.log("function clicked", user);
     console.log("taskfindbyuser", taskFindByUser)
     findTaskByUserService({ taskAssign: taskFindByUser })
+  }
+
+  const handleFlterTask = (status) => {
+    if(status == 'all'){
+      setUserTasks(allTasks)
+    }else{
+      const filterTask = allTasks.filter((tasks) => tasks.taskStatus === status);
+      setUserTasks(filterTask)
+    }
   }
 
   return (
@@ -92,17 +92,19 @@ export default function Body() {
                       </section>
                     ) : (
                       // <TasksCard tasks={userTasks}></TasksCard>
-                      <div className='p-5'>
+                      <div>
                         <div className='m-2.5 min-w-fit'>
-                          <h1 className='flex justify-center mb-5 text-2xl font-semibold'>Total Tasks  - {userTasks.length}</h1>
-                          {/* <div className='mt-5'>
-                          <select name="" id="" onChange={(e) => {setTaskFindByUser(e.target.value); findHandle(e.target.value)}}>
-                            <option value="aish" onClick={findHandle()}>Aish</option>
-                            <option value="mayur">mayur</option>
-                          </select>
-                        </div> */}
+                          <div className='flex justify-center p-2 mb-3 text-xl font-semibold'>
+                            <ul className='list-none flex gap-6 '>
+                              <li><h1 className='flex justify-center mb-3 text-2xl font-semibold'>Total Tasks  - {userTasks.length}</h1></li>
+                              <li className='filterbtn' onClick={() => { handleFlterTask('all')}}>All</li>
+                              <li className='filterbtn filtodo' onClick={() => { handleFlterTask('ToDo')}}>ToDo</li>
+                              <li className='filterbtn filinprogress' onClick={() => { handleFlterTask('InProgress')}}>InProgress</li>
+                              <li className='filterbtn filcomplete' onClick={() => { handleFlterTask('Completed') }}>Completed</li>
+                            </ul>
+                          </div>
                         </div>
-                        <ul className='flex flex-wrap gap-5  justify-center'>
+                        <ul className='flex flex-wrap gap-5 mb-10 justify-center'>
 
                           {userTasks.map((tasks) => (
 
@@ -114,28 +116,12 @@ export default function Body() {
                             </li>
 
                           ))}
-
-
-
                         </ul>
                       </div>
                     )
                   }
                 </>
               ) : (
-                // <Slider {...settings} className='w-7xl border bg-blue-950 text-white text-4xl'>
-                //   <div className='p-10'>
-                //     <h1>Start your day with a clear plan — add your tasks now!</h1>
-                //   </div>
-
-                //   <div className='p-10'>
-                //     <h1>A little progress each day adds up to big success.</h1>
-                //   </div>
-
-                //   <div className='p-10'>
-                //     <h1>Consistency beats motivation. Keep going!</h1>
-                //   </div>
-                // </Slider>
                 <>
                   <section className=' w-1/2 flex items-center justify-center font-bold'>
                     <article className=''>

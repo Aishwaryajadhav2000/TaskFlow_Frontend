@@ -15,7 +15,9 @@ export default function Signin() {
   const navigate = useNavigate();
   const location = useLocation();
   const userData = location.state?.companyName;
-
+  const [usernameError , setUsernameError] = useState(false)
+  const [confirmPassword , setConfirmPassword] = useState(false)
+  const [passwordError , setPasswordError] = useState(false)
   useEffect(() => {
     console.log("Company name", userData);
     setCompanyName(userData)
@@ -35,12 +37,15 @@ export default function Signin() {
 
     if (!companyName || !fullName || !userName || !phoneNo || !gender || !position || !password) {
       alert("please filled all the fields...")
+    }else if(password !== confirmPassword){
+      setPasswordError(true)
     } else {
       try {
         const registerUser = await registration(userData);
         const data = await registerUser.json()
         if(registerUser.status == 500){
-          alert(data.message)
+          // alert(data.message);
+          setUsernameError(true);
         }
         if (registerUser.status == 200) {
           alert("USer created successfully");
@@ -79,6 +84,13 @@ export default function Signin() {
               <label htmlFor="">Create username</label>
               <input type="text" placeholder='create username' onChange={(e) => setUserName(e.target.value)} />
             </div>
+            {
+              usernameError && (
+                <div className='justify-center flex font-bold text-red-500'>
+                  <small>Username already exist.. Please choose different username</small>
+                </div>
+              )
+            }
 
             <div className='flex mt-5'>
               <label htmlFor="">Phone No.</label>
@@ -113,8 +125,15 @@ export default function Signin() {
             <div className='flex  mt-5'>
               <label htmlFor="">Create Password</label>
               <input type="text" placeholder='password' onChange={(e) => setPassword(e.target.value)} />
-              <input type="text" placeholder='confirm password' className='ml-1.5' />
+              <input type="text" placeholder='confirm password' className='ml-1.5' onChange={(e) => setConfirmPassword(e.target.value)}/>
             </div>
+            {
+              passwordError && (
+                <div className='justify-center flex font-bold text-red-500'>
+                  <small>Password not matched</small>
+                </div>
+              )
+            }
 
             <div className=' mt-5 flex justify-center'>
               <button className='bg-amber-700 text-white font-semibold text-xl p-2 w-3xs rounded-2xl' type='submit'>

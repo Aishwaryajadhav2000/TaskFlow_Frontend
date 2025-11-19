@@ -87,3 +87,21 @@ label {
   @apply  w-5xl
 }
 
+
+/* Body */
+.filterbtn{
+  @apply transition-all duration-300 ease-in-out
+         transform hover:scale-105 active:scale-95
+         cursor-pointer  px-6 py-3 rounded-xl bg-blue-700 text-white;
+}
+.filtodo{
+  @apply bg-red-700 text-white
+}
+.filinprogress{
+  @apply bg-fuchsia-700 text-white border border-fuchsia-900
+
+}
+
+.filcomplete{
+@apply bg-green-700 text-white
+}

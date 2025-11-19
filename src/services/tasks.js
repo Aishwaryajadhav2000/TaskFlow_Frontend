@@ -31,10 +31,10 @@ import { useNavigate } from 'react-router-dom';
 export const createTaskservice = async (taskData) => {
     const token = localStorage.getItem("token");
     try {
-        const createTaskResponse = await axios.post(`${API_BASE_URL}/api/createtask` , taskData , {
-            headers : {
-                'Content-Type' : 'multipart/form-data',
-                 "Authorization": `Bearer ${token}`
+        const createTaskResponse = await axios.post(`${API_BASE_URL}/api/createtask`, taskData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${token}`
             }
         })
 
@@ -42,11 +42,11 @@ export const createTaskservice = async (taskData) => {
 
     } catch (err) {
         console.log("error occured", err.message);
-        
+
     }
 }
 
-                 
+
 
 
 export const updateTaskService = async (taskId, taskUpdateData) => {
@@ -56,7 +56,7 @@ export const updateTaskService = async (taskId, taskUpdateData) => {
         //     "Content-type": 'multipart/form-data'
         // },
         body: taskUpdateData
-            // JSON.stringify(taskUpdateData)
+        // JSON.stringify(taskUpdateData)
 
     });
     // const responseData = await taskUpdateRes.json();
@@ -96,10 +96,26 @@ export const findTaskByUserService = async (user) => {
             body: JSON.stringify(user)
         });
         const response = await taskRes.json();
-        console.log("response" , response)
+        console.log("response", response)
         return response
     } catch (err) {
         console.log("error", err.message)
     }
 }
 
+
+export const findTaskByCompany = async (companyname) => {
+    console.log("service calling for getting task by compnyname");
+    try {
+        const getTasksRes = await fetch(`${API_BASE_URL}/api/gettaskbycompany/${companyname}/tasks`, {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        const getTask = await getTasksRes.json();
+        return getTask
+    } catch (err) {
+        console.log(err)
+    }
+}
