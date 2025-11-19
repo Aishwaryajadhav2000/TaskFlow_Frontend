@@ -16,16 +16,20 @@ export default function ChangePwd() {
     }
     return (
         <>
-            <h1>Update Password</h1> <br />
+            <section className='text-2xl text-center items-center align-middle justify-center flex'>
+             
 
-            <section>
-                <br />
-                <form action="" onSubmit={handleSubmit}>
-                    <input type="text" placeholder='add new password' onChange={(e) => { setNewPass(e.target.value) }} />
-                    <div>
-                        <button type='submit'>Submit</button>
-                    </div>
-                </form>
+                <article>
+                    <br />
+                    <form action="" onSubmit={handleSubmit} className=' border border-black p-10 pr-32 pl-32'>
+                        <div>   <h1>Update Password</h1></div> <br />
+                        <input type="text" placeholder='add new password' onChange={(e) => { setNewPass(e.target.value) }} />
+                        
+                        <br /><div>
+                            <button type='submit' className='border border-black p-3 rounded-2xl '>Submit</button>
+                        </div>
+                    </form>
+                </article>
             </section>
         </>
     )

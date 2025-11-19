@@ -6,6 +6,7 @@ import TasksCard from './TasksCard.jsx';
 import { findTaskByUserService } from '../services/tasks.js';
 import { useLocation } from 'react-router-dom';
 import { getUsersByCompany } from '../services/company.js';
+import DevBody from './DevBody.jsx';
 
 export default function Body() {
   const [userFullName, setUserFullName] = useState("");
@@ -13,7 +14,8 @@ export default function Body() {
   const [userTasks, setUserTasks] = useState([]);
   const [taskFindByUser, setTaskFindByUser] = useState("");
   const [displayTask, setDisplayTask] = useState(null);
-  const [companyName, setCompanyName] = useState()
+  const [companyName, setCompanyName] = useState();
+  const [devBody , setDevBody] = useState(false)
 
   useEffect(() => {
     const getLoginStatus = localStorage.getItem("loginstatus");
@@ -26,6 +28,9 @@ export default function Body() {
         setUserFullName(profile.fullname)
         setUserTasks(profile.tasks)
         setCompanyName(profile.companyname);
+        if(profile.companyname === "aishsCreation"){
+          setDevBody(true)
+        }
         console.log("consoling", profile.companyname)
       };
       fetchUser();
@@ -83,14 +88,14 @@ export default function Body() {
               loginStatus == true ? (
                 <>
                   {
-                    userTasks.length <= 0 ? (
+                    userTasks.length <= 0 && devBody === false ? (
                       <section className=' w-1/2 flex items-center justify-center font-bold'>
                         <article>
                           <h1 className='text-4xl'>You haven’t created any tasks yet...</h1>
                           <p>Start by creating a new task!</p>
                         </article>
                       </section>
-                    ) : (
+                    ) : devBody === false ? (
                       // <TasksCard tasks={userTasks}></TasksCard>
                       <div className='p-5'>
                         <div className='m-2.5 min-w-fit'>
@@ -118,6 +123,10 @@ export default function Body() {
 
 
                         </ul>
+                      </div>
+                    ) : (
+                      <div>
+                        <DevBody></DevBody>
                       </div>
                     )
                   }
