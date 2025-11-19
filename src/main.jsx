@@ -17,6 +17,7 @@ import ViewTasks from './pages/ViewTasks.jsx'
 import Profile from './pages/Profile.jsx'
 import Error from './components/Error.jsx'
 import CreateOrg from './pages/CreateOrg.jsx'
+import CompanyDetails from './pages/CompanyDetails.jsx'
 
 const appRouter = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const appRouter = createBrowserRouter([
       {
         path : '/createorg',
         element : <CreateOrg></CreateOrg>
+      },
+      {
+        path : '/:companyname',
+        element:<CompanyDetails></CompanyDetails>
       },
       {
         path: '/',

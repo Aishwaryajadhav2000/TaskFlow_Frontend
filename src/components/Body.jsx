@@ -6,6 +6,7 @@ import TasksCard from './TasksCard.jsx';
 import { findTaskByUserService } from '../services/tasks.js';
 import { useLocation } from 'react-router-dom';
 import { getUsersByCompany } from '../services/company.js';
+import DevBody from './DevBody.jsx';
 
 export default function Body() {
   const [userFullName, setUserFullName] = useState("");
@@ -83,14 +84,14 @@ export default function Body() {
               loginStatus == true ? (
                 <>
                   {
-                    userTasks.length <= 0 ? (
+                    userTasks.length <= 0 && devBody === false ? (
                       <section className=' w-1/2 flex items-center justify-center font-bold'>
                         <article>
                           <h1 className='text-4xl'>You haven’t created any tasks yet...</h1>
                           <p>Start by creating a new task!</p>
                         </article>
                       </section>
-                    ) : (
+                    ) : devBody === false ? (
                       // <TasksCard tasks={userTasks}></TasksCard>
                       <div>
                         <div className='m-2.5 min-w-fit'>
@@ -117,6 +118,10 @@ export default function Body() {
 
                           ))}
                         </ul>
+                      </div>
+                    ) : (
+                      <div>
+                        <DevBody></DevBody>
                       </div>
                     )
                   }
