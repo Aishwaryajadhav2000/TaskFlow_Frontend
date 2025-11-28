@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { deleteUser } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-export default function DeleteAcc() {
+export default function DeleteAcc({companyName}) {
 
   const navigate = useNavigate();
+  // const location = useLocation()
+  // const companyName = location.state?.companyName;
 
+  useEffect(()=>{
+    console.log("company name" , companyName)
+  })
+4
   const handleDeleteAccount = async () => {
 
     if (window.confirm("Are you sure you want to delete your account?")) {
@@ -21,10 +28,10 @@ export default function DeleteAcc() {
           window.location.reload();
         }
       } catch {
-        console.log(err)
+        console.log("error", err)
       }
     } else {
-     console.log("deleting cancel")
+      console.log("deleting cancel")
     }
 
 

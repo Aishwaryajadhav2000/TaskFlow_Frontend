@@ -17,6 +17,8 @@ export default function Body() {
   const [companyName, setCompanyName] = useState()
   // const [filterdTask, setFilterTask] = useState([]);
   const [allTasks , setAllTasks] = useState([])
+  const [devBody , setDevBody] = useState(false)
+  const [taskStatus , setTaskStatus] = useState("ALL")
 
   useEffect(() => {
     const getLoginStatus = localStorage.getItem("loginstatus");
@@ -28,12 +30,17 @@ export default function Body() {
   }, []);
 
   const fetchUser = async () => {
+    console.log(devBody)
     const profile = await getFullProfile();
     setUserFullName(profile.fullname)
     setAllTasks(profile.tasks)
     setUserTasks(profile.tasks)
     setCompanyName(profile.companyname);
     console.log("consoling", profile.companyname)
+    if(profile.companyname == "aishsCreation"){
+      setDevBody(true)
+      console.log(devBody)
+    }
   };
 
   const findHandle = (user) => {
@@ -45,9 +52,11 @@ export default function Body() {
   const handleFlterTask = (status) => {
     if(status == 'all'){
       setUserTasks(allTasks)
+      setTaskStatus("ALL")
     }else{
       const filterTask = allTasks.filter((tasks) => tasks.taskStatus === status);
       setUserTasks(filterTask)
+      setTaskStatus(status)
     }
   }
 
@@ -97,7 +106,7 @@ export default function Body() {
                         <div className='m-2.5 min-w-fit'>
                           <div className='flex justify-center p-2 mb-3 text-xl font-semibold'>
                             <ul className='list-none flex gap-6 '>
-                              <li><h1 className='flex justify-center mb-3 text-2xl font-semibold'>Total Tasks  - {userTasks.length}</h1></li>
+                              <li><h1 className='flex justify-center mb-3 text-2xl font-semibold'>{taskStatus} Tasks  - {userTasks.length}</h1></li>
                               <li className='filterbtn' onClick={() => { handleFlterTask('all')}}>All</li>
                               <li className='filterbtn filtodo' onClick={() => { handleFlterTask('ToDo')}}>ToDo</li>
                               <li className='filterbtn filinprogress' onClick={() => { handleFlterTask('InProgress')}}>InProgress</li>

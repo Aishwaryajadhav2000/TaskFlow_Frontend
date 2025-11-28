@@ -53,7 +53,7 @@ export default function Profile() {
       <section className='flex justify-center'>
         {
           deleteAcc && (
-            <DeleteAcc></DeleteAcc>
+            <DeleteAcc companyName={companyName}></DeleteAcc>
           )
         }
       </section>

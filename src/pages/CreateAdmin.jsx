@@ -17,6 +17,7 @@ export default function CreateAdmin() {
   const navigate = useNavigate();
   const [companyName, setCompanyName] = useState('');
   const [companyList , setCompanyList] = useState([])
+  const [usernameError , setUsernameError] = useState(false)
   // const [userData, setUserData] = useState({ companyName, fullName, userName, phoneNo, gender, position, password });
 
   useEffect(() => {
@@ -48,8 +49,16 @@ export default function CreateAdmin() {
     } else {
       try {
         const registerUser = await registration(userData);
-        if (registerUser.status == 200) {
-          alert("USer created successfully");
+        // if (registerUser.status == 200) {
+        //   alert("USer created successfully");
+        //   navigate('/')
+        // }
+        if(registerUser.status == 500){
+          setUsernameError(true)
+        }else if(registerUser.status == 501){
+          alert("Admin already exist...")
+        }else{
+           alert("USer created successfully");
           navigate('/')
         }
       } catch (err) {
@@ -95,6 +104,13 @@ export default function CreateAdmin() {
               <label htmlFor="">Create username</label>
               <input type="text" placeholder='create username' onChange={(e) => setUserName(e.target.value)} />
             </div>
+            {
+              usernameError && (
+                <div className='justify-center flex font-bold text-red-500'>
+                  <small>Username already exist.. Please choose different username</small>
+                </div>
+              )
+            }
 
             <div className='flex mt-5'>
               <label htmlFor="">Phone No.</label>

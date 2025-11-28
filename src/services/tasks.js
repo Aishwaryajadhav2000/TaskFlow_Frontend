@@ -105,17 +105,15 @@ export const findTaskByUserService = async (user) => {
 
 
 export const findTaskByCompany = async (companyname) => {
-    console.log("service calling for getting task by compnyname");
-    try {
-        const getTasksRes = await fetch(`${API_BASE_URL}/api/gettaskbycompany/${companyname}/tasks`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        const getTask = await getTasksRes.json();
-        return getTask
-    } catch (err) {
-        console.log(err)
-    }
+    console.log(`service calling for getting task by ${companyname}`);
+
+    const getTasksRes = await fetch(`${API_BASE_URL}/api/gettaskbycompany/${companyname}`, {
+        method: 'GET',
+        headers: {
+            "Content-Type": "application/json"
+        }
+    });
+    const getTask = await getTasksRes.json();
+    return getTask
+
 }
