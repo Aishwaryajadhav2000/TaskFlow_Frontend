@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { createNewOrg } from '../services/company';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateOrg() {
 
     const [companyName, setCompanyName] = useState("");
     const [description, setDescription] = useState("")
-
-
+    const navigate = useNavigate()
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -15,6 +15,9 @@ export default function CreateOrg() {
         try {
             const createRes = await createNewOrg(data);
             const datares = await createRes.json();
+            if(createRes.status === 200){
+                navigate('/')
+            }
             
             if (createRes.status === 500) {
                 alert(datares.message)

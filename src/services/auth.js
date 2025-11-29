@@ -42,9 +42,9 @@ export const loginUser = async (credentials) => {
         const responseData = await loginresponse.json();
         console.log("loginresponse", responseData)
 
-        if (loginresponse.status == 400) {
-            alert(responseData.message)
-        }
+        // if (loginresponse.status == 400) {
+        //     alert(responseData.message)
+        // }
         if (loginresponse.status == 200) {
             localStorage.setItem("loginstatus", "true");
             localStorage.setItem("user", JSON.stringify(responseData.user));
@@ -52,6 +52,7 @@ export const loginUser = async (credentials) => {
             window.location.reload();
         }
         return loginresponse
+        // return responseData
     } catch (error) {
         throw error.response?.data || error.message;
     }

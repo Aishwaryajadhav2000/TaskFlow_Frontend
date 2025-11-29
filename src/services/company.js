@@ -18,6 +18,7 @@ export const getUsersByCompany = async (companyname) => {
 }
 
 
+//Creating new client/company
 export const createNewOrg = async(data)=>{
 
     console.log("creating...")
@@ -40,6 +41,7 @@ export const createNewOrg = async(data)=>{
     }
 }
 
+//Get all clients/companies
 export const getCompaniesList = async()=>{
     try{
         const getResponse = await fetch(`${API_BASE_URL}/api/getcompanies` , {
@@ -51,5 +53,41 @@ export const getCompaniesList = async()=>{
         return getResponse;
     }catch(err){
         console.log("error" , err)
+    }
+}
+
+
+//Delete client / company details with userids
+export const deleteClient = async(companyname)=>{
+
+
+        const deleteRes = await fetch(`${API_BASE_URL}/api/deleteclient/${companyname}` ,{
+            method : "DELETE",
+
+        });
+
+        return deleteRes
+
+    
+}
+
+
+//get clientdetails / company details
+export const getClient = async(companyname) =>{
+    try{
+
+        const getRes = await fetch(`${API_BASE_URL}/api/getcompany/${companyname}` , {
+           method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }  
+        });
+
+        const details = await getRes.json();
+        console.log("response in service" , details)
+        return details;
+
+    }catch(err){
+        console.log("error in service" , err)
     }
 }

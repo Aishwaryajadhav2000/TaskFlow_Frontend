@@ -10,9 +10,14 @@ export default function Login({ pageDisplay }) {
   const [password, setPassword] = useState("");
   const [developerSite, setDeveloperSite] = useState(false);
   const [clientSite, setClientSite] = useState(false)
+  const [passError , setPassError] = useState("")
+  const [usernameError , setUsernameError] = useState("")
+  const [showPassword , setShowPassword] = useState(false)
   console.log(pageDisplay)
 
   const loginHandle = async (e) => {
+    setPassError("")
+    setUsernameError("")
     e.preventDefault();
     console.log("username", username)
     console.log("login clicked");
@@ -22,6 +27,13 @@ export default function Login({ pageDisplay }) {
     try {
       const loginHandle = await loginUser(credentials);
       console.log("logingin",loginHandle)
+      if(loginHandle.status === 400){
+        setPassError("Invalid credentials")
+      }
+      if(loginHandle.status === 404){
+        setUsernameError("Username does not exist")
+      }
+
 
     } catch (err) {
 
@@ -38,10 +50,24 @@ export default function Login({ pageDisplay }) {
               <label htmlFor="">Username</label>
               <input type="text" placeholder='enter username' className='border p-1 ' onChange={(e) => setUserName(e.target.value)} />
             </div>
+            <div className='flex justify-center'>
+              <small className='text-red-900 font-bold'>
+                {usernameError}
+              </small>
+            </div>
 
             <div className='flex gap-4 mt-5'>
               <label htmlFor="">Password</label>
-              <input type="text" placeholder='enter password' className='border p-1' onChange={(e) => setPassword(e.target.value)} />
+              <input type={showPassword ? "text" : "password"} placeholder='enter password' className='border p-1' onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <div className='flex gap-2 mt-2'>
+              <input type="checkbox" onChange={()=>setShowPassword(!showPassword)} /> show password
+            </div>
+
+            <div className='flex justify-center'>
+              <small className='text-red-900 font-bold'>
+                {passError}
+              </small>
             </div>
 
             <div >
