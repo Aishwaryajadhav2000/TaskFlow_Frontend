@@ -33,10 +33,7 @@ export default function Login({ pageDisplay }) {
       if(loginHandle.status === 404){
         setUsernameError("Username does not exist")
       }
-
-
     } catch (err) {
-
     }
   }
 
