@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../App.css'
 import { registration } from '../services/auth.js';
-import API_BASE_URL from '../services/common';
+import API_BASE_URL from '../services/common.js';
 import { useNavigate } from "react-router-dom";
 import { getCompaniesList } from '../services/company.js';
 

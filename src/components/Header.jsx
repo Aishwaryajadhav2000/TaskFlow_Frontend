@@ -5,7 +5,7 @@ import { getFullProfile } from '../services/auth.js';
 import '../App.css';
 import logo from '../assets/logo.png'
 import { getUsersByCompany } from '../services/company.js';
-import DevHeader from './DevHeader.jsx';
+import DevHeader from '../developer/DevHeader.jsx';
 import ClientHeader from './ClientHeader.jsx';
 
 export default function Header() {

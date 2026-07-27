@@ -1,0 +1,29 @@
+1. Developer - to create the admin
+2. Admin of each company - only 1 for each company
+3. User for each company - multiple
+
+--------------------------Developer(aish16)--------------------
+1. Can create a Data for each Company
+2. Create & Delete a Admin for each company
+
+
+--------------------------Admin(sopank-navitusEducation)-----------------------
+1. Can create a user for their company
+
+-----------------------user(aish , mandy)-----------
+1. Can Add/Edit/Delete Tasks
+2. Change Password
+3. Update Profile
+
+-------------------------------------------------Backend---------------
+Database on MongoDB - TaskFlow-Backend
+for live -uploaded on Render
+
+
+
+-----------------------------------FrontEnd---------------------
+---Login----
+Password for every user - 12345
+Developer site username for aish's creation - aish16
+uploaded on Vercel
+

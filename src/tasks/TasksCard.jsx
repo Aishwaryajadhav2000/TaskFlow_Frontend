@@ -5,7 +5,7 @@ import { deleteTaskserv } from '../services/tasks.js';
 import '../App.css'
 import { X } from 'lucide-react';
 import { getUsersByCompany } from '../services/company.js';
-import DisplayImage from './DisplayImage.jsx';
+import DisplayImage from '../components/DisplayImage.jsx';
 
 export default function TasksCard({ task, index, setDisplayTask, company }) {
     const navigate = useNavigate();
