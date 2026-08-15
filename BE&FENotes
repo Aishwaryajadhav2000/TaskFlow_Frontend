@@ -1,29 +1,48 @@
 1. Developer - to create the admin
 2. Admin of each company - only 1 for each company
-3. User for each company - multiple
+3. Admin creates User for each company - multiple
 
---------------------------Developer(aish16)--------------------
+
+------------------------------------------------- Live -----------------------------------------------------
+Database on MongoDB - TaskFlow-Backend
+Backend live -uploaded on Render
+FrontEnd Live : Vercel - https://task-flow-eta-jet.vercel.app/
+
+
+----------------------------------- Login for developer -----------------------------------------------------
+---Login----
+Password for every user - 12345
+Developer site username for aish's creation - aish16
+
+---Features---
 1. Can create a Data for each Company
 2. Create & Delete a Admin for each company
 
 
---------------------------Admin(sopank-navitusEducation)-----------------------
-1. Can create a user for their company
 
------------------------user(aish , mandy)-----------
+---------------------------------------------- Other Logins and Features ---------------------------------------------
+-----Admin(sopank : navitusEducation)--------
+1. Home 
+Display the Tasks cretaed by Admin
+
+2. Add tasks
+Task Creation Form
+
+3. View Tasks
+view all the tasks which are created in company
+
+4. Profile
+- Chnage Password , Delete Account , Update Profile
+
+5. create user 
+Admin Can create a user for their company
+
+
+-----user(aish , mandy : navitusEducation)-------
 1. Can Add/Edit/Delete Tasks
 2. Change Password
 3. Update Profile
 
--------------------------------------------------Backend---------------
-Database on MongoDB - TaskFlow-Backend
-for live -uploaded on Render
 
 
-
------------------------------------FrontEnd---------------------
----Login----
-Password for every user - 12345
-Developer site username for aish's creation - aish16
-uploaded on Vercel
 
