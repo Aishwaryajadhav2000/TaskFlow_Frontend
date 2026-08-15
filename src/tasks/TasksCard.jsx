@@ -87,7 +87,7 @@ export default function TasksCard({ task, index, setDisplayTask, company }) {
                         task.taskImage && task.taskImage !== "undefined" && task.taskImage !== "null" &&(
                             <div>
                                 <img
-                                    src={`http://localhost:8000/${task.taskImage}`}
+                                    src={`${API_BASE_URL}/${task.taskImage}`}
                                     alt="taskimage" className='w-[200px] h-[150px]'
                                     // style={{ width: "200px", height: "150px", objectFit: "cover" }}
                                     onClick={() => (setDisplayImage(true))} />
