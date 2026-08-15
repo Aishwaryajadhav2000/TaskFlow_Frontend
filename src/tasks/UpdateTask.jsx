@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { createTaskservice, getTaskById, updateTaskService } from '../services/tasks.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import API_BASE_URL from '../services/common.js';
 
 export default function UpdateTask() {
 
@@ -146,7 +147,7 @@ export default function UpdateTask() {
                         {
                             taskImage && taskImage !== "undefined" || "null"  ? (
                                 <div>
-                                    <img src={`http://localhost:8000/${taskImage}`}
+                                    <img src={`${API_BASE_URL}/${taskImage}`}
                                         alt="taskimage" className='w-[200px] h-[150px]' />
                                 </div>
                             ) :  (

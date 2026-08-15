@@ -6,6 +6,7 @@ import '../App.css'
 import { X } from 'lucide-react';
 import { getUsersByCompany } from '../services/company.js';
 import DisplayImage from '../components/DisplayImage.jsx';
+import API_BASE_URL from '../services/common.js';
 
 export default function TasksCard({ task, index, setDisplayTask, company }) {
     const navigate = useNavigate();

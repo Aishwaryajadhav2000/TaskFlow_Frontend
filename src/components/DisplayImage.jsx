@@ -1,5 +1,6 @@
 import { X } from 'lucide-react'
 import React from 'react'
+import API_BASE_URL from '../services/common'
 
 export default function DisplayImage({ image , display}) {
     return (
@@ -8,7 +9,7 @@ export default function DisplayImage({ image , display}) {
                               <div className='flex justify-end' onClick={(e) => display(null)}><X></X></div>
                           </article>
             <div>
-                <img src={`http://localhost:8000/${image}`}
+                <img src={`${API_BASE_URL}/${image}`}
                     alt="taskimage"
                 />
             </div>
