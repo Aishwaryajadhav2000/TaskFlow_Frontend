@@ -59,8 +59,8 @@ export default function TasksCard({ task, index, setDisplayTask, company }) {
             {
                 displayImage && (
 
-                    <div className='fixed inset-20 flex items-center justify-center bg-black/0 backdrop-blur-sm z-50'>
-                        <div className="bg-white rounded-xl shadow-lg p-6 w-[600px] max-w-[100%] h-[100%] flex flex-col">
+                    <div className='fixed md:inset-20 flex items-center justify-center bg-black/0 inset-0 backdrop-blur-sm z-50 '>
+                        <div className=" rounded-xl shadow-lg p-6 w-full bg-white md:w-[600px] flex flex-col border border-gray-500">
                             <DisplayImage image={task.taskImage} display={setDisplayImage}></DisplayImage>
                         </div>
                     </div>
@@ -106,23 +106,6 @@ export default function TasksCard({ task, index, setDisplayTask, company }) {
                     </div>
 
                 </article>
-
-                {/* <article className=''>
-
-                <div className='flex justify-between'><h1>Assign To - <b>{tasks.taskAssign}</b></h1><h1><b>{tasks.taskStatus}</b></h1></div>
-                <hr /><br />
-                <p> {tasks.description}</p>
-                <div className='flex mt-6 gap-5'>
-                    <button className='p-3 rounded-3xl pl-4 pr-4' onClick={() => deleteTask(tasks._id)}>
-                        Delete Task
-                    </button>
-                    <button className='p-3 rounded-3xl pl-4 pr-4' onClick={() => updateTask(tasks._id)}>
-                        Edit Task
-                    </button>
-                </div>
-
-            </article> */}
-
 
             </section>
         </>

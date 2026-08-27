@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import '../App.css';
 import { useNavigate } from 'react-router-dom';
 
-export default function DevHeader() {
+export default function DevHeader({ phoneMenu }) {
     const navigate = useNavigate()
 
     const profile = () => {
@@ -18,15 +18,25 @@ export default function DevHeader() {
     }
     return (
         <>
-            <li className='headerBtn'><Link to="/">Home</Link></li>
+            <li className='headerBtn'>
+                <i className="bi bi-house-door"></i>
+                <Link to="/" className='' onClick={() => phoneMenu(false)}>
+                    Home
+                </Link>
+            </li>
 
-            <li className='headerBtn'><button onClick={() => { profile() }}>Profile</button></li>
+            <li className='headerBtn'><i class="bi bi-person"></i><Link to="/profile" onClick={() => { phoneMenu(false); }} >Profile</Link></li>
 
-            <li className='headerBtn'><button onClick={() => navigate('/createadmin')}>CreateAdmin</button></li>
+            <li className='headerBtn'>
+                <i class="bi bi-shield-check"></i>
+                <Link to="/createadmin" onClick={() => { phoneMenu(false); }}>CreateAdmin</Link>
+            </li>
 
-            <li className='headerBtn'><button onClick={() => navigate('/createorg')}>CreateNewClient</button></li>
+            <li className='headerBtn'><i class="bi bi-people"></i><Link to="/createorg" onClick={() => { phoneMenu(false); }}>
+            CreateNewClient</Link>
+            </li>
 
-            <li className='headerBtn'><button onClick={() => { logout() }} >Logout</button></li>
+            <li className='headerBtn'><i class="bi bi-box-arrow-right"></i><Link onClick={() => { logout() }} >Logout</Link></li>
         </>
     )
 }

@@ -107,22 +107,45 @@ export default function UpdateTask() {
 
     return (
         <>
-            <section>
+            <section className='mx-4 bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600'>
+                <article className="w-full justify-center flex rounded-2xl px-6 py-5 text-white">
+
+                    <div className="grid grid-cols-[64px_1fr] items-center gap-5">
+
+                        {/* Icon */}
+                        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white text-2xl text-indigo-600 shadow-md">
+                            <i className="bi bi-card-checklist"></i>
+                        </div>
+
+                        {/* Text */}
+                        <div>
+                            <h1 className="text-xl font-bold">
+                                Update Task
+                            </h1>
+
+                            <p className="mt-1 text-sm text-white/90">
+                                Create a new task and assign it to a team member.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    {/* Decorative curves */}
+                    <div className="absolute -bottom-10 -right-10 h-28 w-full rounded-[50%] border-t border-white/20"></div>
+                    <div className="absolute -bottom-14 -left-20 h-28 w-full rounded-[50%] border-t border-white/20"></div>
+
+                </article>
                 <article className='flex align-middle justify-center h-screen'>
-                    <form action="" className='border border-black w-4xl m-10  p-6' onSubmit={updateTask}>
+                    <form action="" className='border border-black rounded-2xl bg-white w-4xl m-10  p-6' onSubmit={updateTask}>
                         <div>
                             <label htmlFor="" className='block'>Description</label>
-                            <textarea name="" id="" className='border border-black w-full m-5 h-28 text-center item-center flex' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
+                            <textarea name="" id="" className='border border-black rounded-2xl w-full h-28 text-center item-center flex' value={description} onChange={(e) => setDescription(e.target.value)}></textarea>
                             {descriptionError === true && (<div className='flex justify-center'><h1>Please Add description</h1></div>)}
                         </div>
 
-                        <div className='flex gap-10 mt-7'>
+                        <div className='md:flex gap-10 mt-7'>
                             <label htmlFor="">Assign to</label>
-                            <select name="" id="" className='border border-black  p-2' value={taskAssign} onChange={(e) => setAssignTo(e.target.value)}>
-                                {/* <option value="null">Select User</option>
-                                <option value="aish">Aish</option>
-                                <option value="mayur">Mayur</option>
-                                <option value="mandar">Mandar</option> */}
+                            <select name="" id="" className='border border-black rounded-lg  w-full md:w-1/2' value={taskAssign} onChange={(e) => setAssignTo(e.target.value)}>
                                 {
                                     users.map((user) => (
                                         <option key={user._id}>{user.fullname}</option>
@@ -132,9 +155,9 @@ export default function UpdateTask() {
                             {taskAssignError === true && (<div className='flex justify-center'><h1>Please select user to assign</h1></div>)}
                         </div>
 
-                        <div className='flex gap-10 mt-7'>
+                        <div className='md:flex gap-10 mt-7'>
                             <label htmlFor="">Select Status</label>
-                            <select name="" id="" className='border border-black  p-2' value={taskStatus} onChange={(e) => setTaskStatus(e.target.value)}>
+                            <select name="" id="" className='border border-black  rounded-lg w-full md:w-1/2' value={taskStatus} onChange={(e) => setTaskStatus(e.target.value)}>
                                 <option value="null">Select status</option>
                                 <option value="ToDo">To Do</option>
                                 <option value="InProgress">In progress</option>
@@ -145,25 +168,25 @@ export default function UpdateTask() {
 
                         <br />
                         {
-                            taskImage && taskImage !== "undefined" || "null"  ? (
+                            taskImage && taskImage !== "undefined" || "null" ? (
                                 <div>
                                     <img src={`${API_BASE_URL}/${taskImage}`}
                                         alt="taskimage" className='w-[200px] h-[150px]' />
                                 </div>
-                            ) :  (
+                            ) : (
                                 <div>
                                     <input type="file" placeholder='Add Screenshot' onChange={handleFileChange} />
 
                                 </div>
-                            ) 
+                            )
                         }
 
                         <div className='mt-7 justify-center flex'>
-                            <button className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold' type='submit'>Update</button>
+                            <button className='bg-blue-500 p-3 w-full md:w-3xs rounded-2xl text-white text-xl font-semibold' type='submit'>Update</button>
                         </div>
 
                         <div className='mt-7 justify-center flex'>
-                            <Link className='bg-blue-500 p-3 w-3xs rounded-2xl text-white text-xl font-semibold text-center' to="/">Cancel</Link>
+                            <Link className='p-3 md:w-3xs w-full rounded-2xl border border-black text-xl font-semibold text-center' to="/">X Cancel</Link>
                         </div>
                     </form>
                 </article>

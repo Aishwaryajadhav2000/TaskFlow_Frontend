@@ -20,7 +20,8 @@ export default function Body() {
   const [devBody, setDevBody] = useState(false)
   const [taskStatus, setTaskStatus] = useState("ALL")
   const [userPosition, setUserPosition] = useState(null)
-  const [noTaskStmt, setNoTaskStmt] = useState(false)
+  const [noTaskStmt, setNoTaskStmt] = useState(false);
+  const [initials, setInitials] = useState()
 
   useEffect(() => {
     const getLoginStatus = localStorage.getItem("loginstatus");
@@ -44,6 +45,8 @@ export default function Body() {
       setDevBody(true)
       console.log(devBody)
     }
+    const getInitials = profile.fullname.split(" ").map(name => name[0]).join("");
+    setInitials(getInitials)
   };
 
   const findHandle = (user) => {
@@ -73,36 +76,33 @@ export default function Body() {
 
   return (
     <>
-      {userFullName === "aishwarya jadhav" ?
-        (
-          <section>
-            {loginStatus == true && (
-              <div className='flex justify-center h-10 text-xl mb-10'>
-                <h1 className='mt-5 text-3xl font-semibold'>Hello {userFullName}</h1>
-              </div>
-            )}
-          </section>
-        ) :
-        <section>
 
-          {
-            displayTask && (
-              <div className='fixed inset-20 flex items-center justify-center bg-black/0 backdrop-blur-sm z-50'>
-                <div className="bg-white rounded-xl shadow-lg p-6 w-[600px] max-w-[90%] h-[90%] flex flex-col">
-                  <TasksCard task={displayTask} setDisplayTask={setDisplayTask} company={companyName}></TasksCard>
-                </div>
-              </div>
-            )
-          }
+      <section className=''>
 
-          {loginStatus == true &&
+        {
+          displayTask && (
+            <div className='fixed md:inset-20 flex items-center justify-center bg-black/0 inset-0 backdrop-blur-sm z-50 '>
+              <div className="bg-white rounded-xl shadow-lg p-6 w-full md:w-[600px] flex flex-col border border-gray-500">
+                <TasksCard task={displayTask} setDisplayTask={setDisplayTask} company={companyName}></TasksCard>
+              </div>
+            </div>
+          )
+        }
+
+        <article className=''>
+          {/* {loginStatus == true &&
             (
-              <div className='flex justify-center gap-10 h-10 text-xl mb-10'>
-                <h1 className='mt-5 text-2xl font-semibold'>Hello {userFullName}</h1>
-                <h1 className='mt-5 text-2xl font-bold text-orange-800'>- {userPosition}</h1>
-              </div>
-            )}
-          <article className='flex justify-center'>
+              //Name and profile
+              <div className='md:flex justify-center gap-10 text-xl mb-3 text-center space-y-2 text-white md:p-3'>
+              
+                  <div className='md:hidden'><h1 className='border inline-block p-3 rounded-full bg-blue-700 text-white'>{initials}</h1></div>
+                  <h1 className='md:text-2xl font-semibold'>Hello</h1>
+                  <h1>{userFullName}</h1>
+                  <h1 className=' md:text-2xl font-bold '>- {userPosition}</h1>
+                </div>
+             
+            )} */}
+          <article className='flex justify-center '>
             {
               loginStatus == true ?
                 (
@@ -117,16 +117,26 @@ export default function Body() {
                             </article>
                           </section>
                         ) : devBody === false ? (
-                          // <TasksCard tasks={userTasks}></TasksCard>
+
                           <div>
-                            <div className='m-2.5 min-w-fit'>
-                              <div className='flex justify-center p-2 mb-3 text-xl font-semibold'>
-                                <ul className='list-none flex gap-6 '>
-                                  <li><h1 className='flex justify-center mb-3 text-2xl font-semibold'>{taskStatus} Tasks  - {userTasks.length}</h1></li>
-                                  <li className='filterbtn' onClick={() => { handleFlterTask('all') }}>All</li>
-                                  <li className='filterbtn filtodo' onClick={() => { handleFlterTask('ToDo') }}>ToDo</li>
-                                  <li className='filterbtn filinprogress' onClick={() => { handleFlterTask('InProgress') }}>InProgress</li>
-                                  <li className='filterbtn filcomplete' onClick={() => { handleFlterTask('Completed') }}>Completed</li>
+                            <div className=''>
+                              <div className='mb-3 text-xl font-semibold'>
+                                <h1 className='flex justify-center mb-3 text-2xl font-semibold'>{taskStatus} Tasks  - {userTasks.length}</h1>
+                                <ul className='w-full space-x-0.5 md:gap-6 justify-center flex '>
+                                  {/* <li><h1 className='md:flex justify-center mb-3 text-2xl font-semibold hidden '>{taskStatus} Tasks  - {userTasks.length}</h1></li> */}
+                                  <li className='filterbtn ' onClick={() => { handleFlterTask('all') }}>
+                                    <i class="bi bi-ui-checks-grid"></i>
+                                    <h1>All</h1>
+                                  </li>
+                                  <li className='filterbtn  filtodo' onClick={() => { handleFlterTask('ToDo') }}>
+                                    <i class="bi bi-calendar2-plus"></i><h1>ToDo</h1>
+                                  </li>
+                                  <li className='filterbtn filinprogress' onClick={() => { handleFlterTask('InProgress') }}>
+                                    <i class="bi bi-clock"></i><h1>InProgress</h1>
+                                  </li>
+                                  <li className='filterbtn filcomplete' onClick={() => { handleFlterTask('Completed') }}>
+                                    <i class="bi bi-check-circle"></i><h1>Completed</h1>
+                                  </li>
                                 </ul>
                               </div>
                             </div>
@@ -142,7 +152,7 @@ export default function Body() {
                                         <div className='p-7' onClick={() => { setDisplayTask(tasks) }}>
                                           <p> {tasks.description}</p>
                                         </div>
-                                        {/* <TasksCard tasks={tasks} index={tasks._id}></TasksCard> */}
+
                                       </li>
                                     ))
                                   }
@@ -152,7 +162,7 @@ export default function Body() {
                           </div>
                         ) : (
                           <div>
-                            <DevBody></DevBody>
+                            <DevBody username={userFullName}  position={userPosition}></DevBody>
                           </div>
                         )
                     }
@@ -169,9 +179,10 @@ export default function Body() {
                 )
             }
           </article>
-        </section>
-      }
+        </article>
 
+
+      </section>
 
 
     </>

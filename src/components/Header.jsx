@@ -20,8 +20,9 @@ export default function Header() {
     const [createUser, setCreateUser] = useState(false);
     const [getCompanyName, setGetComapanyName] = useState("");
     const [users, setUsers] = useState([]);
-    const [developerSite , setDeveloperSite] = useState(false);
-    const [clientSite , setClientSite] = useState(false)
+    const [developerSite, setDeveloperSite] = useState(false);
+    const [clientSite, setClientSite] = useState(false);
+    const [phoneMenu, setPhoneMenu] = useState(false)
 
     useEffect(() => {
         if (logindetail == null) {
@@ -29,13 +30,13 @@ export default function Header() {
         } else {
             setLoginBtn(false);
             const fetchUser = async () => {
-                const profile = await getFullProfile(); 
-                console.log("getting companyname",profile)
+                const profile = await getFullProfile();
+                console.log("getting companyname", profile)
                 setGetComapanyName(profile.companyname);
                 if (profile.companyname === "aishsCreation") {
                     setCreateAdminBtn(true);
                     setDeveloperSite(true)
-                }else{
+                } else {
                     setClientSite(true)
                 }
                 if (profile.position === "admin") {
@@ -49,7 +50,7 @@ export default function Header() {
     }, [getCompanyName]);
 
     useEffect(() => {
-        if (!getCompanyName) return;  // ✅ skip if empty
+        if (!getCompanyName) return;
 
         const fetchAllUsers = async () => {
             const getUSers = await getUsersByCompany(getCompanyName);
@@ -72,7 +73,7 @@ export default function Header() {
         if (logindetail == null) {
             setLoginPage(true)
         } else {
-            navigate('/addtask', { state: { companyName: getCompanyName , users : users}});
+            navigate('/addtask', { state: { companyName: getCompanyName, users: users } });
         }
     }
 
@@ -80,45 +81,73 @@ export default function Header() {
         document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
     }
 
-    const profile = () =>{
+    const profile = () => {
         navigate('/profile')
     }
 
 
     return (
         <>
-            <section className={`m-5 border border-gray-200  p-10 flex justify-center ${loginBtn === true ? 'flex justify-end' : ''}`}>
-                <nav className='flex w-full'>
-                    {/* <div className='w-full'>
-                     <img src={logo} alt="" className='logo'/>
-                   </div> */}
-                    <ul className="flex list-none gap-16">
-                        <li> <img src={logo} alt="" className='h-14' /></li>
-                        {/* {loginBtn == false && (<li className='headerBtn'><Link to="/">Home</Link></li>)}
-                        {loginBtn == false && (<li className='headerBtn'><button onClick={addTask} >Add Tasks</button></li>)}
-                        {loginBtn == false && (<li className='headerBtn'><Link to="/viewtasks">View Tasks</Link></li>)}
-                        {loginBtn == false && (<li className='headerBtn'><button onClick={() => {profile()}}>Profile</button></li>)}
-                        {createAdminBtn === true && (<li className='headerBtn'><button onClick={() => navigate('/createadmin')}>CreateAdmin</button></li>)}
-                        {createUser === true && (<li className='headerBtn'><button onClick={() => navigate('/signup', { state: { companyName: getCompanyName } })}>CreateUser</button></li>)}
-                        {loginBtn == true && (<li><button onClick={() => { setLoginPage(true) }} className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-5 rounded-lg '>Login</button></li>)}
-                        {loginBtn == false && (<li className='headerBtn'><button onClick={() => { logout() }} >Logout</button></li>)} */}
-                        {
-                            developerSite && loginBtn == false ? (
-                                <DevHeader></DevHeader>
-                            ) : clientSite && loginBtn == false ? (
-                                <ClientHeader companyName = {getCompanyName}  users = {users}>
-                                     
-                                </ClientHeader>
-                            ):(
-                                <div>
+            <section className={`p-5 md:border border-gray-200 md:p-10 ${loginBtn === true ? 'flex justify-end' : ''}`}>
+                <ul className="md:flex md:gap-16 gap-2 hidden">
+                    <li className='hidden md:block'> <img src={logo} alt="" className='h-14' /></li>
+
+                    {
+                        developerSite && loginBtn == false ? (
+                            <DevHeader></DevHeader>
+                        ) : clientSite && loginBtn == false ? (
+                            <ClientHeader companyName={getCompanyName} users={users}>
+
+                            </ClientHeader>
+                        ) : (
+                            <div>
                                 {loginBtn == true && (<li><button onClick={() => { setLoginPage(true) }} className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-5 rounded-lg '>Login</button></li>)}
 
-                                </div>
+                            </div>
+                        )
+                    }
+                </ul>
+
+                {/* mobile header */}
+                <ul className='w-full md:hidden justify-between flex font-bold px-3 py-1.5'>
+                       {loginBtn == false ? ( <li><button onClick={() => setPhoneMenu(true)}>Menu</button></li>):(<li><button onClick={() => { setLoginPage(true) }} className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-5 rounded-lg '>Login</button></li>)}
+                        <li> <img src={logo} alt="" className='h-14' /></li>
+                    </ul>
+                    {
+                        phoneMenu && (
+                            <div className='fixed bg-white rounded-2xl px-3'>
+                                <div className='text-end text-2xl text-red-800 mx-3 font-bold' onClick={()=>setPhoneMenu(false)}>X</div>
+                                <ul className='space-y-2'>
+                                {
+                                    developerSite  ? (
+                                        <DevHeader phoneMenu={phoneMenu}></DevHeader>
+                                    ) :(
+                                        <ClientHeader companyName={getCompanyName} users={users} phoneMenu={setPhoneMenu}>
+
+                                        </ClientHeader>
+                                    ) 
+                                }
+                            </ul>
+                            </div>
+                        )
+                    }
+            </section>
+
+            {/* <section className='md:hidden'>
+                <div className='bg-red-600 p-3 border border-black fixed h-screen'>
+                    <ul>
+                        {
+                            developerSite ? (
+                                <DevHeader></DevHeader>
+                            ) : (
+                                <ClientHeader companyName={getCompanyName} users={users}>
+
+                                </ClientHeader>
                             )
                         }
                     </ul>
-                </nav>
-            </section>
+                </div>
+            </section> */}
 
             {
                 loginPage === true && (
@@ -131,5 +160,7 @@ export default function Header() {
                 )
             }
         </>
+
+
     )
 }

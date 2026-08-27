@@ -4,24 +4,24 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { getFullProfile } from '../services/auth';
 
-export default function ClientHeader({ companyName, users }) {
+export default function ClientHeader({ companyName, users, phoneMenu }) {
 
     const navigate = useNavigate();
     const [jobPosition, setJobPosition] = useState(null)
+    const [disabledPhoneMenu, setDisabledPhoneMenu] = useState(false)
 
     const addTask = (e) => {
         e.preventDefault();
-        // if (logindetail == null) {
-        //     setLoginPage(true)
-        // } else {
         navigate('/addtask', { state: { companyName: companyName, users: users } });
-        //}
+        phoneMenu(disabledPhoneMenu)
     }
     const profile = () => {
         navigate('/profile')
+        phoneMenu(disabledPhoneMenu)
     }
-    const viewTask = () =>{
-        navigate('viewtasks' , { state: { companyName: companyName } })
+    const viewTask = () => {
+        navigate('viewtasks', { state: { companyName: companyName } })
+        phoneMenu(disabledPhoneMenu)
     }
 
 
@@ -48,7 +48,7 @@ export default function ClientHeader({ companyName, users }) {
     return (
         <>
 
-            <li className='headerBtn'><Link to="/">Home</Link></li>
+            <li className='headerBtn'><Link to="/" onClick={() => phoneMenu(false)}>Home</Link></li>
 
             <li className='headerBtn'><button onClick={addTask} >Add Tasks</button></li>
 
@@ -66,7 +66,7 @@ export default function ClientHeader({ companyName, users }) {
                 )
             }
 
-            <li className='headerBtn'><button onClick={() => { logout() }} >Logout</button></li>
+            <li className='headerBtn'><Link onClick={() => { logout() }} >Logout</Link></li>
         </>
     )
 }

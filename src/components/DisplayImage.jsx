@@ -10,7 +10,7 @@ export default function DisplayImage({ image , display}) {
                           </article>
             <div>
                 <img src={`${API_BASE_URL}/${image}`}
-                    alt="taskimage"
+                    alt="taskimage" className=''
                 />
             </div>
         </section>

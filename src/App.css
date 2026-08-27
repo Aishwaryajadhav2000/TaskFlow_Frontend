@@ -1,12 +1,16 @@
 @import "tailwindcss" ;
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 
 
 input,
 select {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: flex;
   text-align: center;
   padding: 2px;
+}
+option{
+  @apply text-blue-700;
 }
 
 label {
@@ -29,7 +33,7 @@ label {
          shadow-lg hover:shadow-xl
          transition-all duration-300 ease-in-out
          transform hover:scale-105 active:scale-95
-         cursor-pointer;
+         cursor-pointer w-fit space-x-2;
 }
 
 .complete {
@@ -92,7 +96,7 @@ label {
 .filterbtn{
   @apply transition-all duration-300 ease-in-out
          transform hover:scale-105 active:scale-95
-         cursor-pointer  px-6 py-3 rounded-xl bg-blue-700 text-white;
+         cursor-pointer text-center p-3 md:px-6 md:py-3 rounded-xl bg-blue-700 text-white;
 }
 .filtodo{
   @apply bg-red-700 text-white

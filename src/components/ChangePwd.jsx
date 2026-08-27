@@ -22,12 +22,19 @@ export default function ChangePwd() {
     }
     return (
         <>
-            <h1>Update Password</h1> <br />
 
-            <section>
+
+            <section className='mx-5  md:text-center'>
+                <h1 className='text-2xl font-bold'>Update Password</h1> <br />
                 <br />
                 <form action="" onSubmit={handleSubmit}>
-                    <input type="text" placeholder='add new password' onChange={(e) => { setNewPass(e.target.value) }} />
+                    <label htmlFor="" className='text-xl font-bold'>Enter New Password</label>
+
+
+                    <div className='flex justify-center'>
+                        <input className='mt-5 md:w-1/2 w-full rounded-xl text-2xl border' type="text" placeholder='Enter New Password' onChange={(e) => { setNewPass(e.target.value) }} />
+                    </div>
+
                     <div className='text-red-700 font-semibold text-xl'>
                         {
                             passError && (
@@ -35,10 +42,11 @@ export default function ChangePwd() {
                             )
                         }
                     </div> <br />
-                    <div>
-                        <button type='submit'>Submit</button>
+                    <div className='flex justify-center '>
+                        <button type='submit' className='mt-5 w-full md:w-1/2 bg-blue-700 rounded-xl text-2xl p-3 text-white'>Submit</button>
                     </div>
                 </form>
+
             </section>
         </>
     )

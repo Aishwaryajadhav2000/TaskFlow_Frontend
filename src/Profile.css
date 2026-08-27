@@ -2,5 +2,9 @@
 
 
 .profilebtns{
-    @apply m-5 border border-black rounded-2xl p-5 
+    @apply rounded-2xl p-5 
+}
+
+.updateProfInput{
+    @apply  w-full p-2 rounded-lg border ;
 }

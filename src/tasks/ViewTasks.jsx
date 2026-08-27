@@ -18,7 +18,7 @@ export default function ViewTasks() {
         // console.log("result", result)
         // console.log("result", result.AllTasks.tasks)
         setAllUserTasks(result.AllTasks.tasks); // important
-        console.log("allUserTasks", allUserTasks)
+        console.log("allUserTasks", result.AllTasks.tasks)
       } catch (err) {
         console.log("error", err);
       }
@@ -28,15 +28,21 @@ export default function ViewTasks() {
 
   return (
     <>
-    <h1>{allUserTasks.length}</h1>
-      {allUserTasks.map((tasks, index) => (
-        <li className={`tasklist rounded-lg w-96 shadow-md ${tasks.taskStatus === "Completed" ? "complete" : tasks.taskStatus === "ToDo" ? "todo" : "inprogress"}`} >
-          <div className='p-7'>
-            <p> {tasks.description}</p>
-          </div>
-          {/* <TasksCard tasks={tasks} index={tasks._id}></TasksCard> */}
-        </li>
-      ))}
+      <h1 className='text-center text-2xl mb-3'>All Tasks : {allUserTasks.length}</h1>
+      <ol className='space-y-3 md:flex flex-wrap p-2'>
+        {allUserTasks.map((tasks, index) => (
+          <li className={`tasklist rounded-lg p-5 md:w-1/3 shadow-md w-full ${tasks.taskStatus === "Completed" ? "complete" : tasks.taskStatus === "ToDo" ? "todo" : "inprogress"}`} >
+            <div className=''>
+              <p> {tasks.description}</p>
+            </div>
+            <div className='hidden md:block space-y-2 mt-2'>
+              <h1>Task Status : {tasks.taskStatus}</h1>
+              <h1>Task Assign To : {tasks.taskAssign}</h1>
+            </div>
+          </li>
+
+        ))}
+      </ol>
     </>
   )
 }
