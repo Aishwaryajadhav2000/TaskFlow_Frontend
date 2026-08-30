@@ -54,7 +54,7 @@ const appRouter = createBrowserRouter([
         element : <Profile></Profile>
       },
       {
-        path : '/createorg',
+        path : 'createorg',
         element : <CreateOrg></CreateOrg>
       },
       {
