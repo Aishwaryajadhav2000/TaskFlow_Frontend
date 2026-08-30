@@ -74,11 +74,6 @@ export default function CreateAdmin() {
       <section className='text-white text-lg md:h-screen w-full md:flex justify-center md:justify-between bg-gradient-to-r from-blue-700 via-indigo-600 to-purple-600 p-3'>
 
         <article className='md:w-[30%] items-center flex justify-center'>
-          {/* <div className='bg-purple-400 '>
-            <i class="bi bi-people"></i>
-            <h1>Create new user</h1>
-            <p>Add a New User And Assign To Company With Appropriate Role and Permissions.</p>
-          </div> */}
           <div className='p-5 text-center justify-center '>
             <i class="bi bi-people border p-2 px-4 rounded-full bg-blue-700 text-3xl md:text-7xl"></i>
             <h1 className='text-xl mt-5'>Create New USer</h1><br />
