@@ -21,7 +21,7 @@ export default function DevHeader({ phoneMenu }) {
             <li className='headerBtn'>
                 <i className="bi bi-house-door"></i>
                 <Link to="/" className='' onClick={() => phoneMenu(false)}>
-                    Homes
+                    Home
                 </Link>
             </li>
 
@@ -29,7 +29,7 @@ export default function DevHeader({ phoneMenu }) {
 
             <li className='headerBtn'>
                 <i class="bi bi-shield-check"></i>
-                <Link onClick={() => { phoneMenu(false);navigate('/createadmin') }}>CreateAdmin</Link>
+                <button onClick={() => { navigate('/createadmin') ; phoneMenu(false)}}>CreateAdmin</button>
             </li>
 
             <li className='headerBtn'><i class="bi bi-people"></i><Link to="/createorg" onClick={() => { phoneMenu(false); }}>
