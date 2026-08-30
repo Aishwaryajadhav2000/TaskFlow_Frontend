@@ -25,7 +25,9 @@ export default function DevHeader({ phoneMenu }) {
                 </Link>
             </li>
 
-            <li className='headerBtn'><i class="bi bi-person"></i><Link to="/profile" onClick={() => { phoneMenu(false); }} >Profile</Link></li>
+            <li className='headerBtn'><i class="bi bi-person"></i>
+            <button onClick={() => {navigate('/profile'); phoneMenu(false); }} >Profile
+            </button></li>
 
             <li className='headerBtn'>
                 <i class="bi bi-shield-check"></i>
