@@ -32,8 +32,10 @@ export default function DevHeader({ phoneMenu }) {
                 <button onClick={() => { navigate('/createadmin') ; phoneMenu(false)}}>CreateAdmin</button>
             </li>
 
-            <li className='headerBtn'><i class="bi bi-people"></i><Link to="/createorg" onClick={() => { phoneMenu(false); }}>
-            CreateNewClient</Link>
+            <li className='headerBtn'><i class="bi bi-people"></i>
+            <button onClick={() => {navigate('/createorg'); phoneMenu(false); }}>
+            CreateNewClient
+            </button>
             </li>
 
             <li className='headerBtn'><i class="bi bi-box-arrow-right"></i><Link onClick={() => { logout() }} >Logout</Link></li>
